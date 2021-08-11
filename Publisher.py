@@ -19,13 +19,15 @@ class Publisher:
         return f"<Publisher {self.__name}>"
 
     def __eq__(self, other):
-        pass
+        if isinstance(other, Publisher):
+            return self.__name == other.name
 
     def __lt__(self, other):
-        pass
+        if isinstance(other, Publisher):
+            return self.__name < other.name
 
     def __hash__(self):
-        pass
+        return hash(self.__name)
 
 
 publisher1 = Publisher("Avatar Press")
