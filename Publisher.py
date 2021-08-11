@@ -13,7 +13,7 @@ class Publisher:
         self.__name = name.strip()
 
     def __repr__(self):
-        pass
+        return f"<Publisher {self.__name}>"
 
     def __eq__(self, other):
         pass
