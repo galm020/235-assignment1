@@ -1,8 +1,11 @@
 class Publisher:
     # Default value for name is N/A
     def __init__(self, name="N/A"):
+        self.__name = "N/A"
         # Strip away any spaces
-        self.__name = name.strip()
+
+        if type(name) == str and name.strip() != "":
+            if name.strip() != "N/A": self.__name = name.strip()
 
     @property
     def name(self):
@@ -23,3 +26,13 @@ class Publisher:
 
     def __hash__(self):
         pass
+
+
+publisher1 = Publisher("Avatar Press")
+print(publisher1)
+publisher2 = Publisher("  ")
+print(publisher2)
+publisher3 = Publisher("  DC Comics ")
+print(publisher3)
+publisher4 = Publisher(42)
+print(publisher4)
