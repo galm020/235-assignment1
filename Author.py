@@ -38,9 +38,9 @@ class Author:
     def __eq__(self, other):
         if isinstance(other, Author):
             return self.__unique_id == other.unique_id
-
-    def __repr__(self):
-        return f"<Author {self.__full_name}, author id = {self.__unique_id}>"
+    #
+    # def __repr__(self):
+    #     return f"<Author {self.__full_name}, author id = {self.__unique_id}>"
 
     def __hash__(self):
         return hash(self.__unique_id)
