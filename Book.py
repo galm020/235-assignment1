@@ -114,19 +114,23 @@ class Book:
             raise ValueError
 
     def __repr__(self):
-        pass
+        return f"<Book {self.__title}, book id = {self.__book_id}>"
 
     def __lt__(self, other):
-        pass
+        if isinstance(other, Book):
+            return self.__book_id < other.book_id
 
     def __eq__(self, other):
-        pass
+        if isinstance(other, Book):
+            return self.__book_id == other.book_id
 
     def __hash__(self):
-        pass
+        return hash(self.__book_id)
 
     def add_author(self, author):
-        pass
+        if isinstance(author, Author) and not author in self.__authors:
+            self.__authors.append(author)
 
     def remove_author(self, author):
-        pass
+        if isinstance(author, Author):
+            self.__authors.remove(author)
