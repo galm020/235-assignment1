@@ -23,8 +23,18 @@ one per line in the data file. Each of these JSON objects is either an author or
 
 
 class BooksJSONReader:
-    def __init__(self, books_file_name="", authors_file_name=""):
+    def __init__(self, books_file_name, authors_file_name):
         self.__dataset_of_books = []
+        self.__books_file_name = books_file_name
+        self.__authors_file_name = authors_file_name
+
+    @property
+    def dataset_of_books(self):
+        return self.__dataset_of_books
+
+    # @dataset_of_books.setter
+    # def dataset_of_books(self, value):
+    #     pass
 
     # book_authors: each line is an object that represents an author
     # comic_books: each line is an object that represents a book
@@ -32,8 +42,7 @@ class BooksJSONReader:
         # Dict of authors
         authors = {}
         # List of author objects
-        books = []
-        file = open("book_authors_excerpt.json", "r")
+        file = open(self.__authors_file_name, "r")
 
         line = file.readline()
 
@@ -45,7 +54,7 @@ class BooksJSONReader:
 
         file.close()
 
-        file = open("comic_books_excerpt.json", "r")
+        file = open(self.__books_file_name, "r")
         line = file.readline()
 
         # Reading the books
@@ -57,6 +66,9 @@ class BooksJSONReader:
             book.publisher = temp_publisher
             temp_description = temp_dict["description"]
             book.description = temp_description
+            temp_year = temp_dict["publication_year"]
+            if len(temp_year) > 0:
+                book.release_year = int(temp_year)
             # A list of author dictionaries
             temp_authors = temp_dict["authors"]
             for a in temp_authors:
@@ -67,16 +79,29 @@ class BooksJSONReader:
 
             book.ebook = bool(temp_dict["is_ebook"])
 
-            books.append(book)
+            self.__dataset_of_books.append(book)
             line = file.readline()
 
         file.close()
 
-
-
-
         # We need to combine the two dictionaries of the JSON files into a list of books
 
+#
+# authors_filename = 'book_authors_excerpt.json'
+# books_filename = 'comic_books_excerpt.json'
+# reader = BooksJSONReader(books_filename, authors_filename)
+# reader.read_json_files()
+# print(reader.dataset_of_books[0])
+# print(reader.dataset_of_books[10])
+# print(reader.dataset_of_books[19])
+# print(reader.dataset_of_books[4].publisher)
+# print(reader.dataset_of_books[15].authors[0])
 
-b = BooksJSONReader()
-b.read_json_files()
+authors_filename = 'book_authors_excerpt.json'
+books_filename = 'comic_books_excerpt.json'
+reader = BooksJSONReader(books_filename, authors_filename)
+reader.read_json_files()
+
+print(reader.dataset_of_books[4].title)
+print(reader.dataset_of_books[4].release_year)
+print(reader.dataset_of_books[4].description)
