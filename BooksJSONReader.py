@@ -1,5 +1,8 @@
 import json
 
+from Book import Book
+from Publisher import Publisher
+
 """
 read_json_files(): this method opens the files associated with the BooksJSONReader object and reads the contents. 
 You can use the built-in Python module json (import json) and very conveniently read the file into a list of dictionaries, 
@@ -25,15 +28,48 @@ class BooksJSONReader:
     # book_authors: each line is an object that represents an author
     # comic_books: each line is an object that represents a book
     def read_json_files(self):
+        authors = []
+        books = []
         file = open("book_authors_excerpt.json", "r")
 
         line = file.readline()
 
+        # Reading the authors
         while line:
-            self.__dataset_of_books.append(json.loads(line))
+            authors.append(json.loads(line))
             line = file.readline()
 
         file.close()
+
+        file = open("comic_books_excerpt.json", "r")
+
+        line = file.readline()
+        count = 0
+        # Reading the books
+        while line:
+            # Dictionary for each JSON line (object)
+            temp_dict = json.loads(line)
+            book = Book(int(temp_dict["book_id"]), temp_dict["title"])
+            temp_publisher = Publisher(temp_dict["publisher"])
+            book.publisher = temp_publisher
+            temp_description = temp_dict["description"]
+            book.description = temp_description
+            # A list of author dictionaries
+            temp_authors = temp_dict["authors"]
+
+            # book.release_year = int(temp_dict["publication_year"])
+            book.ebook = bool(temp_dict["is_ebook"])
+
+            books.append(book)
+            # count += 1
+            # books.append(json.loads(line))
+            line = file.readline()
+
+        file.close()
+        # print(count)
+
+
+        # We need to combine the two dictionaries of the JSON files into a list of books
 
 
 b = BooksJSONReader()
