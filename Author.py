@@ -24,7 +24,7 @@ class Author:
         else:
             raise ValueError
 
-        self.__coAuthor = None
+        self._coAuthors = []
 
     @property
     def full_name(self):
@@ -41,9 +41,9 @@ class Author:
     def unique_id(self):
         return self.__unique_id
 
-    @unique_id.setter
-    def unique_id(self, value):
-        raise ValueError
+    # @unique_id.setter
+    # def unique_id(self, value):
+    #     raise ValueError
 
     def __repr__(self):
         return f"<Author {self.__full_name}, author id = {self.__unique_id}>"
@@ -61,10 +61,14 @@ class Author:
 
     def add_coauthor(self, coauthor):
         if isinstance(coauthor, Author):
-            self.__coAuthor = coauthor
+            if coauthor not in self._coAuthors:
+                self._coAuthors.append(coauthor)
+                # We need to ensure that the other author has this author added as a coauthor as well
+                coauthor._coAuthors.append(self)
 
     def check_if_this_author_coauthored_with(self, author):
         if isinstance(author, Author):
-            if self.__coAuthor is not None:
-                return author == self.__coAuthor
-            else: raise ValueError
+            if self._coAuthors is not []:
+                return author in self._coAuthors
+            else:
+                raise ValueError
