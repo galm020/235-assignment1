@@ -67,6 +67,11 @@ class BooksJSONReader:
             temp_description = temp_dict["description"]
             book.description = temp_description
             temp_year = temp_dict["publication_year"]
+            temp_pages = temp_dict["num_pages"]
+
+            if len(temp_pages) > 0:
+                book.num_pages = temp_pages
+
             if len(temp_year) > 0:
                 book.release_year = int(temp_year)
             # A list of author dictionaries

@@ -27,10 +27,20 @@ class Book:
         self.__description = None
         self.__release_year = None
         self.__ebook = None
+        self.__num_pages = None
 
     @property
     def book_id(self):
         return self.__book_id
+
+    @property
+    def num_pages(self):
+        return self.__num_pages
+
+    @num_pages.setter
+    def num_pages(self, value):
+        if isinstance(value, int):
+            self.__num_pages = value
 
     #
     # @book_id.setter
