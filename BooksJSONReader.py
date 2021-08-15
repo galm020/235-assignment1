@@ -1,5 +1,6 @@
 import json
 
+from Author import Author
 from Book import Book
 from Publisher import Publisher
 
@@ -28,7 +29,9 @@ class BooksJSONReader:
     # book_authors: each line is an object that represents an author
     # comic_books: each line is an object that represents a book
     def read_json_files(self):
-        authors = []
+        # Dict of authors
+        authors = {}
+        # List of author objects
         books = []
         file = open("book_authors_excerpt.json", "r")
 
@@ -36,15 +39,15 @@ class BooksJSONReader:
 
         # Reading the authors
         while line:
-            authors.append(json.loads(line))
+            temp_dict = json.loads(line)
+            authors[temp_dict["author_id"]] = temp_dict
             line = file.readline()
 
         file.close()
 
         file = open("comic_books_excerpt.json", "r")
-
         line = file.readline()
-        count = 0
+
         # Reading the books
         while line:
             # Dictionary for each JSON line (object)
@@ -56,17 +59,20 @@ class BooksJSONReader:
             book.description = temp_description
             # A list of author dictionaries
             temp_authors = temp_dict["authors"]
+            for a in temp_authors:
+                # Create an author based on id and name
+                temp_id = a["author_id"]
+                temp_author = Author(int(temp_id), authors[temp_id]["name"])
+                book.add_author(temp_author)
 
-            # book.release_year = int(temp_dict["publication_year"])
             book.ebook = bool(temp_dict["is_ebook"])
 
             books.append(book)
-            # count += 1
-            # books.append(json.loads(line))
             line = file.readline()
 
         file.close()
-        # print(count)
+
+
 
 
         # We need to combine the two dictionaries of the JSON files into a list of books
