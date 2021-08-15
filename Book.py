@@ -24,7 +24,6 @@ class Book:
         self.__authors = []
 
         self.__publisher = None
-        self.__title = None
         self.__description = None
         self.__release_year = None
         self.__ebook = None
@@ -37,25 +36,22 @@ class Book:
     # @book_id.setter
     # def book_id(self, value):
     #     pass
-    
+
     @property
     def publisher(self):
         return self.__publisher
-    
+
     @publisher.setter
     def publisher(self, value):
-        if self.__publisher is None:
-            if isinstance(value, Publisher):
-                self.__publisher = value
-            else:
-                raise ValueError
+        if isinstance(value, Publisher):
+            self.__publisher = value
         else:
-            pass
-    
+            raise ValueError
+
     @property
     def title(self):
         return self.__title
-    
+
     @title.setter
     def title(self, value):
         if isinstance(value, str):
@@ -65,22 +61,22 @@ class Book:
                 raise ValueError
         else:
             raise ValueError
-    
+
     @property
     def description(self):
         return self.__description
-    
+
     @description.setter
     def description(self, value):
         if isinstance(value, str):
             self.__description = value.strip()
         else:
             raise ValueError
-    
+
     @property
     def release_year(self):
         return self.__release_year
-    
+
     @release_year.setter
     def release_year(self, value):
         if isinstance(value, int):
@@ -90,11 +86,11 @@ class Book:
                 raise ValueError
         else:
             raise ValueError
-    
+
     @property
     def ebook(self):
         return self.__ebook
-    
+
     @ebook.setter
     def ebook(self, value):
         if isinstance(value, bool):
@@ -108,7 +104,11 @@ class Book:
 
     @authors.setter
     def authors(self, value):
-        if isinstance(value, Author) and isinstance(value, list):
+        # if isinstance(value, Author) and isinstance(value, list):
+        if isinstance(value, list):
+            for val in value:
+                if not isinstance(val, Author):
+                    raise ValueError
             self.__authors = value
         else:
             raise ValueError
@@ -128,9 +128,13 @@ class Book:
         return hash(self.__book_id)
 
     def add_author(self, author):
-        if isinstance(author, Author) and not author in self.__authors:
+        if isinstance(author, Author) and not (author in self.__authors):
             self.__authors.append(author)
+        else:
+            raise ValueError
 
     def remove_author(self, author):
-        if isinstance(author, Author):
+        if isinstance(author, Author) and author in self.__authors:
             self.__authors.remove(author)
+        # else:
+        #     raise ValueError
