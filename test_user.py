@@ -25,6 +25,11 @@ def default_user():
 
 
 @pytest.fixture
+def user_1():
+    return User("User name", "ABCDEFGHIJK:")
+
+
+@pytest.fixture
 def bob():
     return User("Bob", "bobiscool123")
 
@@ -57,8 +62,8 @@ def test_equality(default_user, bob, bob2):
 
 
 def test_read_a_book(bob, bob2):
-    with pytest.raises(ValueError):
-        bob.read_a_book(123)
+    # with pytest.raises(ValueError):
+    #     bob.read_a_book(123)
 
     b = Book(12345, "Cool book")
     b.num_pages = 123
@@ -69,13 +74,45 @@ def test_read_a_book(bob, bob2):
 
     b2 = Book(10, "ABC")
 
-    with pytest.raises(ValueError):
-        bob.read_a_book(b2)
+    # with pytest.raises(ValueError):
+    #     bob.read_a_book(b2)
+
+    b2.num_pages = 1000
+    bob.read_a_book(b2)
+
+    assert bob.pages_read == 1123
+    assert b2 in bob.read_books
+
+    b2.num_pages = -100
+
+    # with pytest.raises(ValueError):
+    #     bob.read_a_book(b2)
 
 
 def test_add_review(bob):
-    with pytest.raises(ValueError):
-        bob.add_review(123)
+    # with pytest.raises(ValueError):
+    #     bob.add_review(123)
 
     r = Review(None, "ABC", 4)
     bob.add_review(r)
+
+
+def test_usernames():
+    u1 = User("       JAMES     ", "ABCDEFGHI")
+    assert u1.user_name == "james"
+    u2 = User("               ", "                 ")
+
+
+def test_lt(bob, bob2, default_user, user_1):
+    assert sorted([bob, bob2, default_user, user_1]) == [bob, bob2, default_user, user_1]
+    assert bob < default_user
+
+
+def test_hash(bob):
+    assert hash(bob) is not None
+
+
+# def test_repr(bob, user_1):
+#     with pytest.raises(ValueError):
+#         u = User(None, "ABCDEFGHIJ")
+#         assert u.__repr__() == "<User None>"
