@@ -1,10 +1,13 @@
 import datetime
 
 from Book import Book
+from Publisher import Publisher
 
 
 class Review:
     def __init__(self, book, review_text, rating):
+        self.__book = None
+
         if isinstance(book, Book):
             self.__book = book
 
@@ -34,6 +37,7 @@ class Review:
 
     @property
     def book(self):
+        # if self.__book is not None:
         return self.__book
 
     @property
@@ -47,3 +51,8 @@ class Review:
     @property
     def timestamp(self):
         return self.__timestamp
+
+
+publisher = Publisher("DC Comics")
+review = Review(publisher, "I liked this book", 4)
+print(review.book)
