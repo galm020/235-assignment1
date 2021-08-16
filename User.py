@@ -15,7 +15,6 @@ class User:
             if len(password) >= 7:
                 self.__password = password
 
-
         self.__read_books = []
         self.__reviews = []
         self.__pages_read = 0
@@ -63,4 +62,3 @@ class User:
     def add_review(self, review):
         if isinstance(review, Review):
             self.__reviews.append(review)
-
