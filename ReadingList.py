@@ -58,9 +58,4 @@ class ReadingList:
         else:
             raise StopIteration
 
-readlist = ReadingList()
-print(f"Size of reading list: {readlist.size()}")
-readlist.add_book(Book(635, "Hitchhiker's Guide to the Galaxy"))
-readlist.add_book(Book(273, "Harry Potter"))
-readlist.add_book(Book(108, "Lord of the Rings"))
-print(readlist.first_book_in_list())
+
