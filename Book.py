@@ -29,6 +29,27 @@ class Book:
         self.__ebook = None
         self.__num_pages = None
 
+        self.__price = None
+        self.__stock = None
+
+    @property
+    def price(self):
+        return self.__price
+
+    @price.setter
+    def price(self, value):
+        if isinstance(value, int):
+            self.__price = value
+
+    @property
+    def stock(self):
+        return self.__stock
+
+    @stock.setter
+    def stock(self, value):
+        if isinstance(value, int):
+            self.__stock = value
+
     @property
     def book_id(self):
         return self.__book_id
