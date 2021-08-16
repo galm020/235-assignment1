@@ -7,10 +7,23 @@ class ReadingList:
         self.__reading_list = []
         self.__n = 0
 
+    @property
+    def reading_list(self):
+        return self.__reading_list
+
+    # @reading_list.setter
+    # def reading_list(self, value):
+    #     pass
+
     def add_book(self, book):
         if isinstance(book, Book):
             if book not in self.__reading_list:
                 self.__reading_list.append(book)
+
+    # def add_book(self, *books):
+    #     for book in books:
+    #         if isinstance(book, Book):
+    #             self.__reading_list.append(book)
 
     def remove_book(self, book):
         if isinstance(book, Book):
