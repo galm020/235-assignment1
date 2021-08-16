@@ -7,18 +7,14 @@ class User:
         self.__user_name = None
 
         if isinstance(user_name, str) and user_name:
-            # if len(user_name.strip()) > 0:
             self.__user_name = user_name.strip().lower()
-            # else:
-            #     raise ValueError
 
         self.__password = None
 
         if isinstance(password, str) and password:
             if len(password) >= 7:
                 self.__password = password
-            else:
-                raise ValueError
+
 
         self.__read_books = []
         self.__reviews = []
@@ -50,14 +46,10 @@ class User:
     def __eq__(self, other):
         if isinstance(other, User):
             return self.__user_name == other.user_name
-        else:
-            raise ValueError
 
     def __lt__(self, other):
         if isinstance(other, User):
             return self.__user_name < other.user_name
-        else:
-            raise ValueError
 
     def __hash__(self):
         return hash(self.__user_name)
@@ -67,25 +59,8 @@ class User:
             self.__read_books.append(read_book)
             if read_book.num_pages is not None and read_book.num_pages >= 0:
                 self.__pages_read += read_book.num_pages
-            # else:
-            #     raise ValueError
-        # else:
-        #     raise ValueError
 
     def add_review(self, review):
         if isinstance(review, Review):
             self.__reviews.append(review)
-        # else:
-        #     raise ValueError
 
-
-books = [Book(874658, "Harry Potter"), Book(89576, "Lord of the Rings")]
-books[0].num_pages = 107
-books[1].num_pages = 121
-user = User("Martin", "pw12345")
-print(user.read_books)
-print(user.pages_read)
-for book in books:
-    user.read_a_book(book)
-print(user.read_books)
-print(user.pages_read)
