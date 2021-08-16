@@ -48,10 +48,13 @@ class ReadingList:
 
     def __iter__(self):
         self.__n = 0
+        return self
 
     def __next__(self):
         if self.__n < len(self.__reading_list):
-            return self.__reading_list[self.__n]
+            num = self.__n
+            self.__n += 1
+            return self.__reading_list[num]
         else:
             raise StopIteration
 
