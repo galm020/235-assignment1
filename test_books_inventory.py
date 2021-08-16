@@ -38,26 +38,26 @@ def test_add_book(default_inventory, default_book, harry_potter):
         default_inventory.add_book(b3, 10, 100)
 
     default_inventory.add_book(default_book, "10", "100")
-    assert default_book.book_id in default_inventory.data
-    assert default_inventory.data[default_book.book_id] == {"title": "Default Book", "price": "10", "stock": "100"}
+    assert (default_book.book_id, default_book.title) in default_inventory.data
+    assert default_inventory.data[(default_book.book_id, default_book.title)] == {"price": "10", "stock": "100"}
 
-    default_inventory.add_book(harry_potter, 10, 100)
-    assert harry_potter not in default_inventory.data
+    # default_inventory.add_book(harry_potter, 10, 100)
+    # assert harry_potter not in default_inventory.data
     # assert default_inventory.find_book(1234) == default_book
 
 
 def test_remove_book(default_inventory, default_book, harry_potter):
     default_inventory.add_book(default_book, "10", "100")
     # Here, we test that remove book does nothing if the book isn't in the inventory
-    default_inventory.remove_book(harry_potter.book_id)
-    assert harry_potter not in default_inventory.data
+    default_inventory.remove_book((harry_potter.book_id, harry_potter.title))
+    assert (harry_potter.book_id, harry_potter.title) not in default_inventory.data
 
     default_inventory.add_book(harry_potter, "10", "100")
     default_inventory.add_book(default_book, "10", "100")
     default_inventory.remove_book(harry_potter.book_id)
-    assert harry_potter not in default_inventory.data
+    assert (harry_potter.book_id, harry_potter.title) not in default_inventory.data
     default_inventory.remove_book(default_book.book_id)
-    assert default_book not in default_inventory.data
+    assert (default_book.book_id, default_book.title) not in default_inventory.data
 
 #
 # def test_find_book(default_inventory, default_book):
@@ -69,7 +69,7 @@ def test_find_book(default_inventory, harry_potter, default_book):
     # If the book isn't in the inventory, return None
     assert default_inventory.find_book(10) is None
     default_inventory.add_book(harry_potter, 10, 100)
-    assert default_inventory.find_book(555) == {"title": "Harry Potter", "price": 10, "stock": 100}
+    assert default_inventory.find_book(555) == {"price": 10, "stock": 100}
 
 
 def test_find_price(default_inventory, harry_potter):
@@ -84,5 +84,8 @@ def test_find_stock_count(default_inventory, harry_potter):
     assert default_inventory.find_stock_count(69) is None
 
 
-def test_search_book_by_title():
+def test_search_book_by_title(default_inventory, harry_potter, default_book):
+    # default_inventory.add_book(harry_potter, 1000, 10)
+    # default_inventory.add_book(default_book, 50, 20)
+    # assert
     pass
